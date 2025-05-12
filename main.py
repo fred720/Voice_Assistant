@@ -45,10 +45,10 @@ def generate_ollama_response(convo_messages):
     try:
         stream = chat(model=MODEL_OLLAMA, messages=convo_messages, stream=True)
         full_response_text = ''
-        print('ASSISTANT:')
+        print(f'{Fore.LIGHTMAGENTA_EX}{WAKE_WORD}:')
         for chunk in stream:
             content = chunk['message']['content']
-            print(content, end='', flush=True)
+            print(f'{Fore.LIGHTCYAN_EX}{content}{Style.RESET_ALL}', end='', flush=True)
             full_response_text += content
         print('\n\n') # Ensure separation after assistant's full response
         return full_response_text
@@ -64,7 +64,7 @@ def main():
                         help="Use non-English model (if available for chosen size)")
     parser.add_argument("--energy_threshold", default=1000,
                         help="Energy level for mic to detect sound", type=int)
-    parser.add_argument("--record_timeout", default=5, # User's original default
+    parser.add_argument("--record_timeout", default=10, # User's original default
                         help="How long to record audio for a single phrase (seconds) by SpeechRecognition", type=float)
     parser.add_argument("--phrase_timeout", default=15, # User's original default
                         help="How much silence before a voice command is considered over (seconds)", type=float)
